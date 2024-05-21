@@ -1,0 +1,102 @@
+import java.util.*;
+
+class Producto {
+    String fechaCaducidad;
+    int numeroLote;
+    Producto(String fc, int nl) {
+        fechaCaducidad = fc;
+        numeroLote = nl;
+    }
+    String mostrarInformacion() {
+        return "Fecha Caducidad: " + fechaCaducidad + ", Lote: " + numeroLote;
+    }
+}
+
+class ProductoFresco extends Producto {
+    Date fechaEnvasado;
+    String paisOrigen;
+    ProductoFresco(String fc, int nl, Date fe, String po) {
+        super(fc, nl);
+        fechaEnvasado = fe;
+        paisOrigen = po;
+    }
+    String mostrarInformacion() {
+        return super.mostrarInformacion() + ", Envasado: " + fechaEnvasado + ", Origen: " + paisOrigen;
+    }
+}
+
+class ProductoCongelado extends Producto {
+    float temperaturaCongelacion;
+    ProductoCongelado(String fc, int nl, float tc) {
+        super(fc, nl);
+        temperaturaCongelacion = tc;
+    }
+    String mostrarInformacion() {
+        return super.mostrarInformacion() + ", Temp. Congelación: " + temperaturaCongelacion;
+    }
+}
+
+class ProductoRefrigerado extends Producto {
+    int codigoSupervision;
+    ProductoRefrigerado(String fc, int nl, int cs) {
+        super(fc, nl);
+        codigoSupervision = cs;
+    }
+    String mostrarInformacion() {
+        return super.mostrarInformacion() + ", Supervisión: " + codigoSupervision;
+    }
+}
+
+public class Principal {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Producto> productos = new ArrayList<>();
+        while (true) {
+            System.out.println("Seleccione una opción:");
+            System.out.println("1. Crear Producto Fresco");
+            System.out.println("2. Crear Producto Congelado");
+            System.out.println("3. Crear Producto Refrigerado");
+            System.out.println("4. Mostrar Información de Productos");
+            System.out.println("5. Salir");
+
+            int opcion = sc.nextInt();
+            switch (opcion) {
+                case 1:
+                    System.out.println("la Fecha de Caducidad:");
+                    String fechaCaducidadFresco = sc.next();
+                    System.out.println("el Número de Lote:");
+                    int numeroLoteFresco = sc.nextInt();
+                    System.out.println("la Fecha de Envasado:");
+                    Date fechaEnvasadoFresco = new Date(sc.nextLong());
+                    System.out.println("el País de Origen:");
+                    String paisOrigenFresco = sc.next();
+                    productos.add(new ProductoFresco(fechaCaducidadFresco, numeroLoteFresco, fechaEnvasadoFresco, paisOrigenFresco));
+                    break;
+                case 2:
+                    System.out.println("la Fecha de Caducidad:");
+                    String fechaCaducidadCongelado = sc.next();
+                    System.out.println("el Número de Lote:");
+                    int numeroLoteCongelado = sc.nextInt();
+                    System.out.println("la Temperatura de Congelación:");
+                    float temperaturaCongelacion = sc.nextFloat();
+                    productos.add(new ProductoCongelado(fechaCaducidadCongelado, numeroLoteCongelado, temperaturaCongelacion));
+                    break;
+                case 3:
+                    System.out.println("la Fecha de Caducidad:");
+                    String fechaCaducidadRefrigerado = sc.next();
+                    System.out.println("el Número de Lote:");
+                    int numeroLoteRefrigerado = sc.nextInt();
+                    System.out.println("el Código de Supervisión:");
+                    int codigoSupervisionRefrigerado = sc.nextInt();
+                    productos.add(new ProductoRefrigerado(fechaCaducidadRefrigerado, numeroLoteRefrigerado, codigoSupervisionRefrigerado));
+                    break;
+                case 4:
+                    productos.forEach(p -> System.out.println(p.mostrarInformacion()));
+                    break;
+                case 5:
+                    sc.close();
+                    return;
+            }
+        }
+    }
+}
